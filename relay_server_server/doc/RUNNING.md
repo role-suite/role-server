@@ -62,6 +62,34 @@ When you are done, stop the containers:
 docker compose stop
 ```
 
+### 1.3 Run without Postgres or Docker (in-memory only)
+
+If you don’t have PostgreSQL or Docker, you can run the server with **in-memory** workspace storage. Data is lost when the server stops.
+
+1. **Generate code** (if not done):
+   ```bash
+   cd relay_server_server
+   serverpod generate
+   ```
+
+2. **Use the no-database config:**
+   ```bash
+   cp config/development_local.yaml.example config/development.yaml
+   ```
+
+3. **Run the server** (do **not** use `--apply-migrations`):
+   ```bash
+   dart pub get
+   RELAY_USE_IN_MEMORY=1 dart bin/main.dart
+   ```
+
+   On Windows (PowerShell):
+   ```powershell
+   $env:RELAY_USE_IN_MEMORY="1"; dart bin/main.dart
+   ```
+
+4. In the Röle app, set API base URL to `http://localhost:8080`.
+
 ---
 
 ## 2. Run the Röle (Flutter) client
