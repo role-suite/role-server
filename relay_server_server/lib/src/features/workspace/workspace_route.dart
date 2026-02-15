@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:serverpod/serverpod.dart';
 
+import 'package:relay_server_server/src/core/api_key_auth.dart';
 import 'package:relay_server_server/src/core/session_helper.dart';
 import 'package:relay_server_server/src/features/workspace/data/workspace_repository.dart';
 import 'package:relay_server_server/src/features/workspace/workspace_json.dart';
@@ -12,6 +13,15 @@ import 'package:relay_server_server/src/generated/protocol.dart';
 class WorkspaceRoute extends Route {
   @override
   Future<Result> handleCall(Session session, Request request) async {
+    if (ApiKeyAuth.isRequired && session.authenticated == null) {
+      return Response(
+        401,
+        body: Body.fromString(
+          'Unauthorized. Provide a valid API key in Authorization: Bearer <key>.',
+          mimeType: MimeType.plainText,
+        ),
+      );
+    }
     final method = request.method;
     if (method == Method.get) {
       return _handleGet(session);
