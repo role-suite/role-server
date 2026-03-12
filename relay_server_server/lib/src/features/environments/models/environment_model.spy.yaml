@@ -1,0 +1,5 @@
+# Environment: name + variables (key/value). Aligned with Röle EnvironmentModel.
+class: EnvironmentModel
+fields:
+  name: String
+  variables: Map<String, String>

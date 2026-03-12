@@ -1,0 +1,131 @@
+# =============================================================================
+# role-server – comprehensive .gitignore (Dart, Serverpod, IDE, OS, secrets)
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# OS
+# -----------------------------------------------------------------------------
+.DS_Store
+.DS_Store?
+.AppleDouble
+.LSOverride
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# -----------------------------------------------------------------------------
+# IDE – JetBrains (IntelliJ, Android Studio, etc.)
+# -----------------------------------------------------------------------------
+.idea/
+*.iml
+*.ipr
+*.iws
+out/
+
+# -----------------------------------------------------------------------------
+# IDE – VS Code (optional; remove if you commit shared settings)
+# -----------------------------------------------------------------------------
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+
+# -----------------------------------------------------------------------------
+# Dart / Pub
+# -----------------------------------------------------------------------------
+.dart_tool/
+.packages
+# Uncomment to ignore pubspec.lock in all packages (some teams lock server deps)
+# pubspec.lock
+
+# -----------------------------------------------------------------------------
+# Build & artifacts
+# -----------------------------------------------------------------------------
+build/
+*.exe
+*.dll
+*.so
+*.dylib
+*.class
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# -----------------------------------------------------------------------------
+# Serverpod server (relay_server_server)
+# -----------------------------------------------------------------------------
+# Generated (run `serverpod generate` from relay_server_server to regenerate)
+relay_server_server/lib/src/generated/
+# Migrations (run `serverpod create-migration` to regenerate)
+relay_server_server/migrations/
+# Secrets – never commit
+relay_server_server/config/passwords.yaml
+relay_server_server/config/*.local.yaml
+relay_server_server/config/firebase_service_account_key.json
+# Built Flutter web app (if served from server)
+relay_server_server/web/app
+
+# -----------------------------------------------------------------------------
+# Environment & secrets (any package)
+# -----------------------------------------------------------------------------
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.crt
+*_credentials*.json
+
+# -----------------------------------------------------------------------------
+# Logs & temp
+# -----------------------------------------------------------------------------
+*.log
+pub_log.txt
+*.tmp
+*.temp
+*.bak
+*.swp
+*.swo
+*~
+.cache/
+
+# -----------------------------------------------------------------------------
+# Test & coverage
+# -----------------------------------------------------------------------------
+coverage/
+*.lcov
+.test_coverage.dart
+test/.test_coverage.dart
+
+# -----------------------------------------------------------------------------
+# Doc generation (dartdoc)
+# -----------------------------------------------------------------------------
+doc/api/
+**/doc/api/
+
+# -----------------------------------------------------------------------------
+# Dart compiled / snapshots (if any)
+# -----------------------------------------------------------------------------
+*.dart_tool.*
+*.snapshot
+
+# -----------------------------------------------------------------------------
+# Optional: Flutter (if you add a Flutter app to this repo)
+# -----------------------------------------------------------------------------
+# .flutter-plugins
+# .flutter-plugins-dependencies
+# **/android/.gradle/
+# **/android/local.properties
+# **/android/**/GeneratedPluginRegistrant.java
+# **/ios/Flutter/flutter_export_environment.sh
+# **/ios/Flutter/Generated.xcconfig
+# **/ios/Flutter/app.flx
+# **/ios/Pods/
+# **/ios/.symlinks/
+# **/ios/Flutter/App.framework
+# **/ios/Flutter/Flutter.framework

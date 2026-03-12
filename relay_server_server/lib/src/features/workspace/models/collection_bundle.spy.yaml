@@ -1,0 +1,5 @@
+# One collection plus its requests. Aligned with Röle CollectionBundle.
+class: CollectionBundle
+fields:
+  collection: CollectionModel
+  requests: List<ApiRequestModel>

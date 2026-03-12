@@ -1,0 +1,8 @@
+# Collection metadata. Aligned with Röle CollectionModel.
+class: CollectionModel
+fields:
+  id: String
+  name: String
+  description: String
+  createdAt: DateTime
+  updatedAt: DateTime

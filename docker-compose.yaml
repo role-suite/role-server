@@ -1,0 +1,23 @@
+# Postgres and Redis for relay_server_server. Run from repo root:
+#   docker compose up --build --detach
+# Then from relay_server_server: dart bin/main.dart --apply-migrations
+version: '3.8'
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: relay_server
+    ports:
+      - "8090:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+
+volumes:
+  postgres_data: {}

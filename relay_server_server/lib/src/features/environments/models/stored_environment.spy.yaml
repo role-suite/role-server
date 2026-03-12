@@ -1,0 +1,11 @@
+# One row per user environment. Used by EnvironmentRepository.
+class: StoredEnvironment
+table: stored_environment
+fields:
+  userId: int
+  name: String
+  variables: Map<String, String>
+indexes:
+  stored_environment_user_id_name_idx:
+    fields: userId, name
+    unique: true

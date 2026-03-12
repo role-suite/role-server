@@ -1,0 +1,3 @@
+# Serverpod code generation. See https://docs.serverpod.dev/concepts/configuration
+features:
+  database: true
