@@ -1,5 +1,5 @@
-# Copy to development.yaml and adjust. Used when running with --mode development.
-# Workspace persistence requires database (and migrations).
+# Copy to development.yaml and adjust. Used with --mode development.
+# This project expects PostgreSQL + Redis in development.
 
 apiServer:
   port: 8080
@@ -7,12 +7,14 @@ apiServer:
   publicPort: 8080
   publicScheme: http
 
+webServer:
+  port: 8082
+  publicHost: localhost
+  publicPort: 8082
+  publicScheme: http
+
 database:
   host: localhost
   port: 8090
   name: relay_server
   user: postgres
-
-redis:
-  host: localhost
-  port: 6379

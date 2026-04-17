@@ -1,6 +1,7 @@
 import 'package:serverpod/serverpod.dart';
 
 import 'package:relay_server_server/src/core/guards/auth_guard.dart';
+import 'package:relay_server_server/src/core/logging/endpoint_action_runner.dart';
 import 'package:relay_server_server/src/features/environments/services/environments_service.dart';
 import 'package:relay_server_server/src/generated/protocol.dart';
 
@@ -12,10 +13,16 @@ class EnvironmentsEndpoint extends Endpoint {
 
   Future<List<EnvironmentModel>> list(Session session, int workspaceId) {
     final userId = AuthGuard.requireUserId(session);
-    return _service.listForWorkspace(
+    return EndpointActionRunner.run(
       session,
-      userId: userId,
-      workspaceId: workspaceId,
+      endpoint: 'environments',
+      action: 'list',
+      context: {'userId': userId, 'workspaceId': workspaceId},
+      operation: () => _service.listForWorkspace(
+        session,
+        userId: userId,
+        workspaceId: workspaceId,
+      ),
     );
   }
 
@@ -25,11 +32,21 @@ class EnvironmentsEndpoint extends Endpoint {
     int environmentId,
   ) {
     final userId = AuthGuard.requireUserId(session);
-    return _service.getById(
+    return EndpointActionRunner.run(
       session,
-      userId: userId,
-      workspaceId: workspaceId,
-      environmentId: environmentId,
+      endpoint: 'environments',
+      action: 'get',
+      context: {
+        'userId': userId,
+        'workspaceId': workspaceId,
+        'environmentId': environmentId,
+      },
+      operation: () => _service.getById(
+        session,
+        userId: userId,
+        workspaceId: workspaceId,
+        environmentId: environmentId,
+      ),
     );
   }
 
@@ -38,7 +55,14 @@ class EnvironmentsEndpoint extends Endpoint {
     CreateEnvironmentRequest request,
   ) {
     final userId = AuthGuard.requireUserId(session);
-    return _service.create(session, userId: userId, request: request);
+    return EndpointActionRunner.run(
+      session,
+      endpoint: 'environments',
+      action: 'create',
+      context: {'userId': userId, 'workspaceId': request.workspaceId},
+      operation: () =>
+          _service.create(session, userId: userId, request: request),
+    );
   }
 
   Future<EnvironmentModel> update(
@@ -46,16 +70,37 @@ class EnvironmentsEndpoint extends Endpoint {
     UpdateEnvironmentRequest request,
   ) {
     final userId = AuthGuard.requireUserId(session);
-    return _service.update(session, userId: userId, request: request);
+    return EndpointActionRunner.run(
+      session,
+      endpoint: 'environments',
+      action: 'update',
+      context: {
+        'userId': userId,
+        'workspaceId': request.workspaceId,
+        'environmentId': request.environmentId,
+      },
+      operation: () =>
+          _service.update(session, userId: userId, request: request),
+    );
   }
 
   Future<void> remove(Session session, int workspaceId, int environmentId) {
     final userId = AuthGuard.requireUserId(session);
-    return _service.remove(
+    return EndpointActionRunner.run(
       session,
-      userId: userId,
-      workspaceId: workspaceId,
-      environmentId: environmentId,
+      endpoint: 'environments',
+      action: 'remove',
+      context: {
+        'userId': userId,
+        'workspaceId': workspaceId,
+        'environmentId': environmentId,
+      },
+      operation: () => _service.remove(
+        session,
+        userId: userId,
+        workspaceId: workspaceId,
+        environmentId: environmentId,
+      ),
     );
   }
 
@@ -65,11 +110,21 @@ class EnvironmentsEndpoint extends Endpoint {
     int environmentId,
   ) {
     final userId = AuthGuard.requireUserId(session);
-    return _service.listVariables(
+    return EndpointActionRunner.run(
       session,
-      userId: userId,
-      workspaceId: workspaceId,
-      environmentId: environmentId,
+      endpoint: 'environments',
+      action: 'listVariables',
+      context: {
+        'userId': userId,
+        'workspaceId': workspaceId,
+        'environmentId': environmentId,
+      },
+      operation: () => _service.listVariables(
+        session,
+        userId: userId,
+        workspaceId: workspaceId,
+        environmentId: environmentId,
+      ),
     );
   }
 
@@ -78,7 +133,18 @@ class EnvironmentsEndpoint extends Endpoint {
     CreateEnvironmentVariableRequest request,
   ) {
     final userId = AuthGuard.requireUserId(session);
-    return _service.createVariable(session, userId: userId, request: request);
+    return EndpointActionRunner.run(
+      session,
+      endpoint: 'environments',
+      action: 'createVariable',
+      context: {
+        'userId': userId,
+        'workspaceId': request.workspaceId,
+        'environmentId': request.environmentId,
+      },
+      operation: () =>
+          _service.createVariable(session, userId: userId, request: request),
+    );
   }
 
   Future<EnvironmentVariableModel> updateVariable(
@@ -86,7 +152,19 @@ class EnvironmentsEndpoint extends Endpoint {
     UpdateEnvironmentVariableRequest request,
   ) {
     final userId = AuthGuard.requireUserId(session);
-    return _service.updateVariable(session, userId: userId, request: request);
+    return EndpointActionRunner.run(
+      session,
+      endpoint: 'environments',
+      action: 'updateVariable',
+      context: {
+        'userId': userId,
+        'workspaceId': request.workspaceId,
+        'environmentId': request.environmentId,
+        'variableId': request.variableId,
+      },
+      operation: () =>
+          _service.updateVariable(session, userId: userId, request: request),
+    );
   }
 
   Future<void> removeVariable(
@@ -96,12 +174,23 @@ class EnvironmentsEndpoint extends Endpoint {
     int variableId,
   ) {
     final userId = AuthGuard.requireUserId(session);
-    return _service.removeVariable(
+    return EndpointActionRunner.run(
       session,
-      userId: userId,
-      workspaceId: workspaceId,
-      environmentId: environmentId,
-      variableId: variableId,
+      endpoint: 'environments',
+      action: 'removeVariable',
+      context: {
+        'userId': userId,
+        'workspaceId': workspaceId,
+        'environmentId': environmentId,
+        'variableId': variableId,
+      },
+      operation: () => _service.removeVariable(
+        session,
+        userId: userId,
+        workspaceId: workspaceId,
+        environmentId: environmentId,
+        variableId: variableId,
+      ),
     );
   }
 }

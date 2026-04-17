@@ -1,6 +1,7 @@
 import 'package:serverpod/serverpod.dart';
 
 import 'package:relay_server_server/src/core/guards/auth_guard.dart';
+import 'package:relay_server_server/src/core/logging/endpoint_action_runner.dart';
 import 'package:relay_server_server/src/features/collections/services/collections_service.dart';
 import 'package:relay_server_server/src/generated/protocol.dart';
 
@@ -12,10 +13,16 @@ class CollectionsEndpoint extends Endpoint {
 
   Future<List<CollectionModel>> list(Session session, int workspaceId) {
     final userId = AuthGuard.requireUserId(session);
-    return _service.listForWorkspace(
+    return EndpointActionRunner.run(
       session,
-      userId: userId,
-      workspaceId: workspaceId,
+      endpoint: 'collections',
+      action: 'list',
+      context: {'userId': userId, 'workspaceId': workspaceId},
+      operation: () => _service.listForWorkspace(
+        session,
+        userId: userId,
+        workspaceId: workspaceId,
+      ),
     );
   }
 
@@ -25,11 +32,21 @@ class CollectionsEndpoint extends Endpoint {
     int collectionId,
   ) {
     final userId = AuthGuard.requireUserId(session);
-    return _service.getById(
+    return EndpointActionRunner.run(
       session,
-      userId: userId,
-      workspaceId: workspaceId,
-      collectionId: collectionId,
+      endpoint: 'collections',
+      action: 'get',
+      context: {
+        'userId': userId,
+        'workspaceId': workspaceId,
+        'collectionId': collectionId,
+      },
+      operation: () => _service.getById(
+        session,
+        userId: userId,
+        workspaceId: workspaceId,
+        collectionId: collectionId,
+      ),
     );
   }
 
@@ -38,7 +55,14 @@ class CollectionsEndpoint extends Endpoint {
     CreateCollectionRequest request,
   ) {
     final userId = AuthGuard.requireUserId(session);
-    return _service.create(session, userId: userId, request: request);
+    return EndpointActionRunner.run(
+      session,
+      endpoint: 'collections',
+      action: 'create',
+      context: {'userId': userId, 'workspaceId': request.workspaceId},
+      operation: () =>
+          _service.create(session, userId: userId, request: request),
+    );
   }
 
   Future<CollectionModel> update(
@@ -46,16 +70,37 @@ class CollectionsEndpoint extends Endpoint {
     UpdateCollectionRequest request,
   ) {
     final userId = AuthGuard.requireUserId(session);
-    return _service.update(session, userId: userId, request: request);
+    return EndpointActionRunner.run(
+      session,
+      endpoint: 'collections',
+      action: 'update',
+      context: {
+        'userId': userId,
+        'workspaceId': request.workspaceId,
+        'collectionId': request.collectionId,
+      },
+      operation: () =>
+          _service.update(session, userId: userId, request: request),
+    );
   }
 
   Future<void> remove(Session session, int workspaceId, int collectionId) {
     final userId = AuthGuard.requireUserId(session);
-    return _service.remove(
+    return EndpointActionRunner.run(
       session,
-      userId: userId,
-      workspaceId: workspaceId,
-      collectionId: collectionId,
+      endpoint: 'collections',
+      action: 'remove',
+      context: {
+        'userId': userId,
+        'workspaceId': workspaceId,
+        'collectionId': collectionId,
+      },
+      operation: () => _service.remove(
+        session,
+        userId: userId,
+        workspaceId: workspaceId,
+        collectionId: collectionId,
+      ),
     );
   }
 
@@ -65,11 +110,21 @@ class CollectionsEndpoint extends Endpoint {
     int collectionId,
   ) {
     final userId = AuthGuard.requireUserId(session);
-    return _service.listFolders(
+    return EndpointActionRunner.run(
       session,
-      userId: userId,
-      workspaceId: workspaceId,
-      collectionId: collectionId,
+      endpoint: 'collections',
+      action: 'listFolders',
+      context: {
+        'userId': userId,
+        'workspaceId': workspaceId,
+        'collectionId': collectionId,
+      },
+      operation: () => _service.listFolders(
+        session,
+        userId: userId,
+        workspaceId: workspaceId,
+        collectionId: collectionId,
+      ),
     );
   }
 
@@ -78,7 +133,18 @@ class CollectionsEndpoint extends Endpoint {
     CreateCollectionFolderRequest request,
   ) {
     final userId = AuthGuard.requireUserId(session);
-    return _service.createFolder(session, userId: userId, request: request);
+    return EndpointActionRunner.run(
+      session,
+      endpoint: 'collections',
+      action: 'createFolder',
+      context: {
+        'userId': userId,
+        'workspaceId': request.workspaceId,
+        'collectionId': request.collectionId,
+      },
+      operation: () =>
+          _service.createFolder(session, userId: userId, request: request),
+    );
   }
 
   Future<CollectionFolderModel> updateFolder(
@@ -86,7 +152,19 @@ class CollectionsEndpoint extends Endpoint {
     UpdateCollectionFolderRequest request,
   ) {
     final userId = AuthGuard.requireUserId(session);
-    return _service.updateFolder(session, userId: userId, request: request);
+    return EndpointActionRunner.run(
+      session,
+      endpoint: 'collections',
+      action: 'updateFolder',
+      context: {
+        'userId': userId,
+        'workspaceId': request.workspaceId,
+        'collectionId': request.collectionId,
+        'folderId': request.folderId,
+      },
+      operation: () =>
+          _service.updateFolder(session, userId: userId, request: request),
+    );
   }
 
   Future<void> removeFolder(
@@ -96,12 +174,23 @@ class CollectionsEndpoint extends Endpoint {
     int folderId,
   ) {
     final userId = AuthGuard.requireUserId(session);
-    return _service.removeFolder(
+    return EndpointActionRunner.run(
       session,
-      userId: userId,
-      workspaceId: workspaceId,
-      collectionId: collectionId,
-      folderId: folderId,
+      endpoint: 'collections',
+      action: 'removeFolder',
+      context: {
+        'userId': userId,
+        'workspaceId': workspaceId,
+        'collectionId': collectionId,
+        'folderId': folderId,
+      },
+      operation: () => _service.removeFolder(
+        session,
+        userId: userId,
+        workspaceId: workspaceId,
+        collectionId: collectionId,
+        folderId: folderId,
+      ),
     );
   }
 
@@ -111,11 +200,21 @@ class CollectionsEndpoint extends Endpoint {
     int collectionId,
   ) {
     final userId = AuthGuard.requireUserId(session);
-    return _service.listEndpoints(
+    return EndpointActionRunner.run(
       session,
-      userId: userId,
-      workspaceId: workspaceId,
-      collectionId: collectionId,
+      endpoint: 'collections',
+      action: 'listEndpoints',
+      context: {
+        'userId': userId,
+        'workspaceId': workspaceId,
+        'collectionId': collectionId,
+      },
+      operation: () => _service.listEndpoints(
+        session,
+        userId: userId,
+        workspaceId: workspaceId,
+        collectionId: collectionId,
+      ),
     );
   }
 
@@ -124,7 +223,18 @@ class CollectionsEndpoint extends Endpoint {
     CreateCollectionEndpointRequest request,
   ) {
     final userId = AuthGuard.requireUserId(session);
-    return _service.createEndpoint(session, userId: userId, request: request);
+    return EndpointActionRunner.run(
+      session,
+      endpoint: 'collections',
+      action: 'createEndpoint',
+      context: {
+        'userId': userId,
+        'workspaceId': request.workspaceId,
+        'collectionId': request.collectionId,
+      },
+      operation: () =>
+          _service.createEndpoint(session, userId: userId, request: request),
+    );
   }
 
   Future<CollectionEndpointModel> updateEndpoint(
@@ -132,7 +242,19 @@ class CollectionsEndpoint extends Endpoint {
     UpdateCollectionEndpointRequest request,
   ) {
     final userId = AuthGuard.requireUserId(session);
-    return _service.updateEndpoint(session, userId: userId, request: request);
+    return EndpointActionRunner.run(
+      session,
+      endpoint: 'collections',
+      action: 'updateEndpoint',
+      context: {
+        'userId': userId,
+        'workspaceId': request.workspaceId,
+        'collectionId': request.collectionId,
+        'endpointId': request.endpointId,
+      },
+      operation: () =>
+          _service.updateEndpoint(session, userId: userId, request: request),
+    );
   }
 
   Future<void> removeEndpoint(
@@ -142,12 +264,23 @@ class CollectionsEndpoint extends Endpoint {
     int endpointId,
   ) {
     final userId = AuthGuard.requireUserId(session);
-    return _service.removeEndpoint(
+    return EndpointActionRunner.run(
       session,
-      userId: userId,
-      workspaceId: workspaceId,
-      collectionId: collectionId,
-      endpointId: endpointId,
+      endpoint: 'collections',
+      action: 'removeEndpoint',
+      context: {
+        'userId': userId,
+        'workspaceId': workspaceId,
+        'collectionId': collectionId,
+        'endpointId': endpointId,
+      },
+      operation: () => _service.removeEndpoint(
+        session,
+        userId: userId,
+        workspaceId: workspaceId,
+        collectionId: collectionId,
+        endpointId: endpointId,
+      ),
     );
   }
 
@@ -158,12 +291,23 @@ class CollectionsEndpoint extends Endpoint {
     int endpointId,
   ) {
     final userId = AuthGuard.requireUserId(session);
-    return _service.listEndpointExamples(
+    return EndpointActionRunner.run(
       session,
-      userId: userId,
-      workspaceId: workspaceId,
-      collectionId: collectionId,
-      endpointId: endpointId,
+      endpoint: 'collections',
+      action: 'listEndpointExamples',
+      context: {
+        'userId': userId,
+        'workspaceId': workspaceId,
+        'collectionId': collectionId,
+        'endpointId': endpointId,
+      },
+      operation: () => _service.listEndpointExamples(
+        session,
+        userId: userId,
+        workspaceId: workspaceId,
+        collectionId: collectionId,
+        endpointId: endpointId,
+      ),
     );
   }
 
@@ -172,10 +316,21 @@ class CollectionsEndpoint extends Endpoint {
     CreateCollectionEndpointExampleRequest request,
   ) {
     final userId = AuthGuard.requireUserId(session);
-    return _service.createEndpointExample(
+    return EndpointActionRunner.run(
       session,
-      userId: userId,
-      request: request,
+      endpoint: 'collections',
+      action: 'createEndpointExample',
+      context: {
+        'userId': userId,
+        'workspaceId': request.workspaceId,
+        'collectionId': request.collectionId,
+        'endpointId': request.endpointId,
+      },
+      operation: () => _service.createEndpointExample(
+        session,
+        userId: userId,
+        request: request,
+      ),
     );
   }
 
@@ -184,10 +339,22 @@ class CollectionsEndpoint extends Endpoint {
     UpdateCollectionEndpointExampleRequest request,
   ) {
     final userId = AuthGuard.requireUserId(session);
-    return _service.updateEndpointExample(
+    return EndpointActionRunner.run(
       session,
-      userId: userId,
-      request: request,
+      endpoint: 'collections',
+      action: 'updateEndpointExample',
+      context: {
+        'userId': userId,
+        'workspaceId': request.workspaceId,
+        'collectionId': request.collectionId,
+        'endpointId': request.endpointId,
+        'exampleId': request.exampleId,
+      },
+      operation: () => _service.updateEndpointExample(
+        session,
+        userId: userId,
+        request: request,
+      ),
     );
   }
 
@@ -199,13 +366,25 @@ class CollectionsEndpoint extends Endpoint {
     int exampleId,
   ) {
     final userId = AuthGuard.requireUserId(session);
-    return _service.removeEndpointExample(
+    return EndpointActionRunner.run(
       session,
-      userId: userId,
-      workspaceId: workspaceId,
-      collectionId: collectionId,
-      endpointId: endpointId,
-      exampleId: exampleId,
+      endpoint: 'collections',
+      action: 'removeEndpointExample',
+      context: {
+        'userId': userId,
+        'workspaceId': workspaceId,
+        'collectionId': collectionId,
+        'endpointId': endpointId,
+        'exampleId': exampleId,
+      },
+      operation: () => _service.removeEndpointExample(
+        session,
+        userId: userId,
+        workspaceId: workspaceId,
+        collectionId: collectionId,
+        endpointId: endpointId,
+        exampleId: exampleId,
+      ),
     );
   }
 }
