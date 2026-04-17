@@ -1,0 +1,12 @@
+class: CollectionEndpointExampleModel
+fields:
+  id: int
+  endpointId: int
+  name: String
+  statusCode: int
+  headersJson: String?
+  body: String?
+  position: int
+  createdByUserId: int
+  createdAt: DateTime
+  updatedAt: DateTime

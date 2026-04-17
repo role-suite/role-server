@@ -1,0 +1,9 @@
+class: WorkspaceModel
+fields:
+  id: int
+  name: String
+  slug: String
+  type: String
+  role: String
+  createdAt: DateTime
+  updatedAt: DateTime

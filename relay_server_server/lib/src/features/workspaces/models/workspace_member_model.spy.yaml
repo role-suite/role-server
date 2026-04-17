@@ -1,0 +1,7 @@
+class: WorkspaceMemberModel
+fields:
+  userId: int
+  name: String
+  email: String
+  role: String
+  joinedAt: DateTime

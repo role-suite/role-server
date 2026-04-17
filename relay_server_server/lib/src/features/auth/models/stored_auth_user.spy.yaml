@@ -1,0 +1,9 @@
+class: StoredAuthUser
+table: auth_users
+fields:
+  email: String
+  name: String
+  passwordHash: String
+  passwordSalt: String
+  createdAt: DateTime
+  updatedAt: DateTime

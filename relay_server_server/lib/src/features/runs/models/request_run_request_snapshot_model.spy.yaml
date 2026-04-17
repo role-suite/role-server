@@ -1,0 +1,11 @@
+class: RequestRunRequestSnapshotModel
+fields:
+  runId: int
+  method: String
+  url: String
+  headersJson: String
+  queryParamsJson: String
+  bodyJson: String?
+  authJson: String?
+  resolvedVariablesJson: String
+  timeoutMs: int

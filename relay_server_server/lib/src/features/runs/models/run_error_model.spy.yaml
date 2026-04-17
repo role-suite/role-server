@@ -1,0 +1,5 @@
+class: RunErrorModel
+fields:
+  code: String
+  message: String
+  detailsJson: String?

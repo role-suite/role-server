@@ -1,0 +1,7 @@
+class: CreateCollectionFolderRequest
+fields:
+  workspaceId: int
+  collectionId: int
+  parentFolderId: int?
+  name: String
+  position: int?

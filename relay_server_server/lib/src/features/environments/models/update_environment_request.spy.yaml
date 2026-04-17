@@ -1,0 +1,5 @@
+class: UpdateEnvironmentRequest
+fields:
+  workspaceId: int
+  environmentId: int
+  name: String

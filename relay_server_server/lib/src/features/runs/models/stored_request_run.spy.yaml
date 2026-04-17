@@ -1,0 +1,16 @@
+class: StoredRequestRun
+table: request_runs
+fields:
+  workspaceId: int
+  initiatedByUserId: int
+  sourceType: String
+  sourceCollectionId: int?
+  sourceEndpointId: int?
+  status: String
+  startedAt: DateTime?
+  completedAt: DateTime?
+  durationMs: int?
+  errorCode: String?
+  errorMessage: String?
+  errorJson: String?
+  createdAt: DateTime

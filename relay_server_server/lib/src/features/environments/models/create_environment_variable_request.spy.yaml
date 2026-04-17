@@ -1,0 +1,9 @@
+class: CreateEnvironmentVariableRequest
+fields:
+  workspaceId: int
+  environmentId: int
+  key: String
+  value: String
+  enabled: bool?
+  isSecret: bool?
+  position: int?

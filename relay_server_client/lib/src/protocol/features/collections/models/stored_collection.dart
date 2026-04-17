@@ -15,20 +15,20 @@ import 'package:serverpod_client/serverpod_client.dart' as _i1;
 abstract class StoredCollection implements _i1.SerializableModel {
   StoredCollection._({
     this.id,
-    required this.userId,
-    required this.collectionId,
+    required this.workspaceId,
     required this.name,
-    required this.description,
+    this.description,
+    required this.createdByUserId,
     required this.createdAt,
     required this.updatedAt,
   });
 
   factory StoredCollection({
     int? id,
-    required int userId,
-    required String collectionId,
+    required int workspaceId,
     required String name,
-    required String description,
+    String? description,
+    required int createdByUserId,
     required DateTime createdAt,
     required DateTime updatedAt,
   }) = _StoredCollectionImpl;
@@ -36,10 +36,10 @@ abstract class StoredCollection implements _i1.SerializableModel {
   factory StoredCollection.fromJson(Map<String, dynamic> jsonSerialization) {
     return StoredCollection(
       id: jsonSerialization['id'] as int?,
-      userId: jsonSerialization['userId'] as int,
-      collectionId: jsonSerialization['collectionId'] as String,
+      workspaceId: jsonSerialization['workspaceId'] as int,
       name: jsonSerialization['name'] as String,
-      description: jsonSerialization['description'] as String,
+      description: jsonSerialization['description'] as String?,
+      createdByUserId: jsonSerialization['createdByUserId'] as int,
       createdAt: _i1.DateTimeJsonExtension.fromJson(
         jsonSerialization['createdAt'],
       ),
@@ -54,13 +54,13 @@ abstract class StoredCollection implements _i1.SerializableModel {
   /// the id will be null.
   int? id;
 
-  int userId;
-
-  String collectionId;
+  int workspaceId;
 
   String name;
 
-  String description;
+  String? description;
+
+  int createdByUserId;
 
   DateTime createdAt;
 
@@ -71,10 +71,10 @@ abstract class StoredCollection implements _i1.SerializableModel {
   @_i1.useResult
   StoredCollection copyWith({
     int? id,
-    int? userId,
-    String? collectionId,
+    int? workspaceId,
     String? name,
     String? description,
+    int? createdByUserId,
     DateTime? createdAt,
     DateTime? updatedAt,
   });
@@ -83,10 +83,10 @@ abstract class StoredCollection implements _i1.SerializableModel {
     return {
       '__className__': 'StoredCollection',
       if (id != null) 'id': id,
-      'userId': userId,
-      'collectionId': collectionId,
+      'workspaceId': workspaceId,
       'name': name,
-      'description': description,
+      if (description != null) 'description': description,
+      'createdByUserId': createdByUserId,
       'createdAt': createdAt.toJson(),
       'updatedAt': updatedAt.toJson(),
     };
@@ -103,18 +103,18 @@ class _Undefined {}
 class _StoredCollectionImpl extends StoredCollection {
   _StoredCollectionImpl({
     int? id,
-    required int userId,
-    required String collectionId,
+    required int workspaceId,
     required String name,
-    required String description,
+    String? description,
+    required int createdByUserId,
     required DateTime createdAt,
     required DateTime updatedAt,
   }) : super._(
          id: id,
-         userId: userId,
-         collectionId: collectionId,
+         workspaceId: workspaceId,
          name: name,
          description: description,
+         createdByUserId: createdByUserId,
          createdAt: createdAt,
          updatedAt: updatedAt,
        );
@@ -125,19 +125,19 @@ class _StoredCollectionImpl extends StoredCollection {
   @override
   StoredCollection copyWith({
     Object? id = _Undefined,
-    int? userId,
-    String? collectionId,
+    int? workspaceId,
     String? name,
-    String? description,
+    Object? description = _Undefined,
+    int? createdByUserId,
     DateTime? createdAt,
     DateTime? updatedAt,
   }) {
     return StoredCollection(
       id: id is int? ? id : this.id,
-      userId: userId ?? this.userId,
-      collectionId: collectionId ?? this.collectionId,
+      workspaceId: workspaceId ?? this.workspaceId,
       name: name ?? this.name,
-      description: description ?? this.description,
+      description: description is String? ? description : this.description,
+      createdByUserId: createdByUserId ?? this.createdByUserId,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
     );

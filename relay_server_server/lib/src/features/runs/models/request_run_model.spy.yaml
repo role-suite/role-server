@@ -1,0 +1,14 @@
+class: RequestRunModel
+fields:
+  id: int
+  workspaceId: int
+  initiatedByUserId: int
+  status: String
+  sourceType: String
+  sourceCollectionId: int?
+  sourceEndpointId: int?
+  startedAt: DateTime?
+  completedAt: DateTime?
+  durationMs: int?
+  error: RunErrorModel?
+  createdAt: DateTime

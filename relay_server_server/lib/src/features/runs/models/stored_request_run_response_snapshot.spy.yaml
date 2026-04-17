@@ -1,0 +1,10 @@
+class: StoredRequestRunResponseSnapshot
+table: request_run_responses
+fields:
+  runId: int
+  statusCode: int
+  headersJson: String
+  bodyText: String?
+  bodyBase64: String?
+  sizeBytes: int
+  truncated: bool

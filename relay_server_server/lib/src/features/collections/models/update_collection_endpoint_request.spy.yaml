@@ -1,0 +1,14 @@
+class: UpdateCollectionEndpointRequest
+fields:
+  workspaceId: int
+  collectionId: int
+  endpointId: int
+  folderId: int?
+  name: String?
+  method: String?
+  url: String?
+  headersJson: String?
+  queryParamsJson: String?
+  bodyJson: String?
+  authJson: String?
+  position: int?

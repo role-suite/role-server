@@ -1,0 +1,4 @@
+class: AuthLoginRequest
+fields:
+  email: String
+  password: String

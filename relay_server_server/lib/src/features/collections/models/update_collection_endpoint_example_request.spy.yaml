@@ -1,0 +1,11 @@
+class: UpdateCollectionEndpointExampleRequest
+fields:
+  workspaceId: int
+  collectionId: int
+  endpointId: int
+  exampleId: int
+  name: String?
+  statusCode: int?
+  headersJson: String?
+  body: String?
+  position: int?

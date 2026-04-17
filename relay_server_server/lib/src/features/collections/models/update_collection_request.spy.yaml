@@ -1,0 +1,6 @@
+class: UpdateCollectionRequest
+fields:
+  workspaceId: int
+  collectionId: int
+  name: String?
+  description: String?

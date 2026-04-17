@@ -1,0 +1,5 @@
+class: WorkspaceUpdatesQuery
+fields:
+  workspaceId: int
+  sinceId: int?
+  limit: int?

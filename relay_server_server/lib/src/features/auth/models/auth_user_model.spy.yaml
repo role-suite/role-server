@@ -1,0 +1,7 @@
+class: AuthUserModel
+fields:
+  id: int
+  email: String
+  name: String
+  createdAt: DateTime
+  updatedAt: DateTime

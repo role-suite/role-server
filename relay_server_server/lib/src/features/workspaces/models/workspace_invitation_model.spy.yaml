@@ -1,0 +1,10 @@
+class: WorkspaceInvitationModel
+fields:
+  id: int
+  workspaceId: int
+  email: String
+  role: String
+  status: String
+  expiresAt: DateTime
+  createdAt: DateTime
+  acceptedAt: DateTime?

@@ -1,5 +1,8 @@
-# Environment: name + variables (key/value). Aligned with Röle EnvironmentModel.
 class: EnvironmentModel
 fields:
+  id: int
+  workspaceId: int
   name: String
-  variables: Map<String, String>
+  createdByUserId: int
+  createdAt: DateTime
+  updatedAt: DateTime

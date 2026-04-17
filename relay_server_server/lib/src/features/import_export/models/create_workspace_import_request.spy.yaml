@@ -1,0 +1,5 @@
+class: CreateWorkspaceImportRequest
+fields:
+  workspaceId: int
+  format: String?
+  payloadJson: String

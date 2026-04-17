@@ -1,6 +1,5 @@
-# Copy to development.yaml to run WITHOUT Postgres or Docker.
-# Workspace data is stored in memory (set env RELAY_USE_IN_MEMORY=1).
-# Data is lost when the server stops.
+# Development runtime config (database-backed).
+# This rebuild uses PostgreSQL persistence for all feature modules.
 
 apiServer:
   port: 8080
@@ -8,11 +7,14 @@ apiServer:
   publicPort: 8080
   publicScheme: http
 
-# Required for the /workspace REST route (Röle client).
 webServer:
   port: 8082
   publicHost: localhost
   publicPort: 8082
   publicScheme: http
 
-# No database or redis - omit them so the server starts without them.
+database:
+  host: localhost
+  port: 8090
+  name: relay_server
+  user: postgres

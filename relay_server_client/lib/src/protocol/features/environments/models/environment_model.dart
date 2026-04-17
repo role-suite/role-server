@@ -11,45 +11,74 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
-import 'package:relay_server_client/src/protocol/protocol.dart' as _i2;
 
 abstract class EnvironmentModel implements _i1.SerializableModel {
   EnvironmentModel._({
+    required this.id,
+    required this.workspaceId,
     required this.name,
-    required this.variables,
+    required this.createdByUserId,
+    required this.createdAt,
+    required this.updatedAt,
   });
 
   factory EnvironmentModel({
+    required int id,
+    required int workspaceId,
     required String name,
-    required Map<String, String> variables,
+    required int createdByUserId,
+    required DateTime createdAt,
+    required DateTime updatedAt,
   }) = _EnvironmentModelImpl;
 
   factory EnvironmentModel.fromJson(Map<String, dynamic> jsonSerialization) {
     return EnvironmentModel(
+      id: jsonSerialization['id'] as int,
+      workspaceId: jsonSerialization['workspaceId'] as int,
       name: jsonSerialization['name'] as String,
-      variables: _i2.Protocol().deserialize<Map<String, String>>(
-        jsonSerialization['variables'],
+      createdByUserId: jsonSerialization['createdByUserId'] as int,
+      createdAt: _i1.DateTimeJsonExtension.fromJson(
+        jsonSerialization['createdAt'],
+      ),
+      updatedAt: _i1.DateTimeJsonExtension.fromJson(
+        jsonSerialization['updatedAt'],
       ),
     );
   }
 
+  int id;
+
+  int workspaceId;
+
   String name;
 
-  Map<String, String> variables;
+  int createdByUserId;
+
+  DateTime createdAt;
+
+  DateTime updatedAt;
 
   /// Returns a shallow copy of this [EnvironmentModel]
   /// with some or all fields replaced by the given arguments.
   @_i1.useResult
   EnvironmentModel copyWith({
+    int? id,
+    int? workspaceId,
     String? name,
-    Map<String, String>? variables,
+    int? createdByUserId,
+    DateTime? createdAt,
+    DateTime? updatedAt,
   });
   @override
   Map<String, dynamic> toJson() {
     return {
       '__className__': 'EnvironmentModel',
+      'id': id,
+      'workspaceId': workspaceId,
       'name': name,
-      'variables': variables.toJson(),
+      'createdByUserId': createdByUserId,
+      'createdAt': createdAt.toJson(),
+      'updatedAt': updatedAt.toJson(),
     };
   }
 
@@ -61,11 +90,19 @@ abstract class EnvironmentModel implements _i1.SerializableModel {
 
 class _EnvironmentModelImpl extends EnvironmentModel {
   _EnvironmentModelImpl({
+    required int id,
+    required int workspaceId,
     required String name,
-    required Map<String, String> variables,
+    required int createdByUserId,
+    required DateTime createdAt,
+    required DateTime updatedAt,
   }) : super._(
+         id: id,
+         workspaceId: workspaceId,
          name: name,
-         variables: variables,
+         createdByUserId: createdByUserId,
+         createdAt: createdAt,
+         updatedAt: updatedAt,
        );
 
   /// Returns a shallow copy of this [EnvironmentModel]
@@ -73,22 +110,20 @@ class _EnvironmentModelImpl extends EnvironmentModel {
   @_i1.useResult
   @override
   EnvironmentModel copyWith({
+    int? id,
+    int? workspaceId,
     String? name,
-    Map<String, String>? variables,
+    int? createdByUserId,
+    DateTime? createdAt,
+    DateTime? updatedAt,
   }) {
     return EnvironmentModel(
+      id: id ?? this.id,
+      workspaceId: workspaceId ?? this.workspaceId,
       name: name ?? this.name,
-      variables:
-          variables ??
-          this.variables.map(
-            (
-              key0,
-              value0,
-            ) => MapEntry(
-              key0,
-              value0,
-            ),
-          ),
+      createdByUserId: createdByUserId ?? this.createdByUserId,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
     );
   }
 }

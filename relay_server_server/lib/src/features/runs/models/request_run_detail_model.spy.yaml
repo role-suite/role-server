@@ -1,0 +1,5 @@
+class: RequestRunDetailModel
+fields:
+  run: RequestRunModel
+  requestSnapshot: RequestRunRequestSnapshotModel?
+  responseSnapshot: RequestRunResponseSnapshotModel?

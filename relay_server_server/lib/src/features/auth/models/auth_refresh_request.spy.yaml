@@ -1,0 +1,3 @@
+class: AuthRefreshRequest
+fields:
+  refreshToken: String

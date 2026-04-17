@@ -1,0 +1,10 @@
+class: StoredWorkspaceEvent
+table: workspace_events
+fields:
+  workspaceId: int
+  actorUserId: int
+  entity: String
+  action: String
+  entityId: int?
+  payloadJson: String?
+  createdAt: DateTime

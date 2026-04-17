@@ -11,30 +11,37 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
-import 'package:relay_server_client/src/protocol/protocol.dart' as _i2;
 
 abstract class StoredEnvironment implements _i1.SerializableModel {
   StoredEnvironment._({
     this.id,
-    required this.userId,
+    required this.workspaceId,
     required this.name,
-    required this.variables,
+    required this.createdByUserId,
+    required this.createdAt,
+    required this.updatedAt,
   });
 
   factory StoredEnvironment({
     int? id,
-    required int userId,
+    required int workspaceId,
     required String name,
-    required Map<String, String> variables,
+    required int createdByUserId,
+    required DateTime createdAt,
+    required DateTime updatedAt,
   }) = _StoredEnvironmentImpl;
 
   factory StoredEnvironment.fromJson(Map<String, dynamic> jsonSerialization) {
     return StoredEnvironment(
       id: jsonSerialization['id'] as int?,
-      userId: jsonSerialization['userId'] as int,
+      workspaceId: jsonSerialization['workspaceId'] as int,
       name: jsonSerialization['name'] as String,
-      variables: _i2.Protocol().deserialize<Map<String, String>>(
-        jsonSerialization['variables'],
+      createdByUserId: jsonSerialization['createdByUserId'] as int,
+      createdAt: _i1.DateTimeJsonExtension.fromJson(
+        jsonSerialization['createdAt'],
+      ),
+      updatedAt: _i1.DateTimeJsonExtension.fromJson(
+        jsonSerialization['updatedAt'],
       ),
     );
   }
@@ -44,29 +51,37 @@ abstract class StoredEnvironment implements _i1.SerializableModel {
   /// the id will be null.
   int? id;
 
-  int userId;
+  int workspaceId;
 
   String name;
 
-  Map<String, String> variables;
+  int createdByUserId;
+
+  DateTime createdAt;
+
+  DateTime updatedAt;
 
   /// Returns a shallow copy of this [StoredEnvironment]
   /// with some or all fields replaced by the given arguments.
   @_i1.useResult
   StoredEnvironment copyWith({
     int? id,
-    int? userId,
+    int? workspaceId,
     String? name,
-    Map<String, String>? variables,
+    int? createdByUserId,
+    DateTime? createdAt,
+    DateTime? updatedAt,
   });
   @override
   Map<String, dynamic> toJson() {
     return {
       '__className__': 'StoredEnvironment',
       if (id != null) 'id': id,
-      'userId': userId,
+      'workspaceId': workspaceId,
       'name': name,
-      'variables': variables.toJson(),
+      'createdByUserId': createdByUserId,
+      'createdAt': createdAt.toJson(),
+      'updatedAt': updatedAt.toJson(),
     };
   }
 
@@ -81,14 +96,18 @@ class _Undefined {}
 class _StoredEnvironmentImpl extends StoredEnvironment {
   _StoredEnvironmentImpl({
     int? id,
-    required int userId,
+    required int workspaceId,
     required String name,
-    required Map<String, String> variables,
+    required int createdByUserId,
+    required DateTime createdAt,
+    required DateTime updatedAt,
   }) : super._(
          id: id,
-         userId: userId,
+         workspaceId: workspaceId,
          name: name,
-         variables: variables,
+         createdByUserId: createdByUserId,
+         createdAt: createdAt,
+         updatedAt: updatedAt,
        );
 
   /// Returns a shallow copy of this [StoredEnvironment]
@@ -97,25 +116,19 @@ class _StoredEnvironmentImpl extends StoredEnvironment {
   @override
   StoredEnvironment copyWith({
     Object? id = _Undefined,
-    int? userId,
+    int? workspaceId,
     String? name,
-    Map<String, String>? variables,
+    int? createdByUserId,
+    DateTime? createdAt,
+    DateTime? updatedAt,
   }) {
     return StoredEnvironment(
       id: id is int? ? id : this.id,
-      userId: userId ?? this.userId,
+      workspaceId: workspaceId ?? this.workspaceId,
       name: name ?? this.name,
-      variables:
-          variables ??
-          this.variables.map(
-            (
-              key0,
-              value0,
-            ) => MapEntry(
-              key0,
-              value0,
-            ),
-          ),
+      createdByUserId: createdByUserId ?? this.createdByUserId,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
     );
   }
 }

@@ -1,0 +1,8 @@
+class: UpdateCollectionFolderRequest
+fields:
+  workspaceId: int
+  collectionId: int
+  folderId: int
+  parentFolderId: int?
+  name: String?
+  position: int?

@@ -1,0 +1,10 @@
+class: CollectionFolderModel
+fields:
+  id: int
+  collectionId: int
+  parentFolderId: int?
+  name: String
+  position: int
+  createdByUserId: int
+  createdAt: DateTime
+  updatedAt: DateTime

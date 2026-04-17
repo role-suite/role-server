@@ -1,0 +1,10 @@
+class: CreateCollectionEndpointExampleRequest
+fields:
+  workspaceId: int
+  collectionId: int
+  endpointId: int
+  name: String
+  statusCode: int
+  headersJson: String?
+  body: String?
+  position: int?

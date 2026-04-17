@@ -1,0 +1,10 @@
+class: UpdateEnvironmentVariableRequest
+fields:
+  workspaceId: int
+  environmentId: int
+  variableId: int
+  key: String?
+  value: String?
+  enabled: bool?
+  isSecret: bool?
+  position: int?

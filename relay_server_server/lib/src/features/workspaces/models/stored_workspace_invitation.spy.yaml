@@ -1,0 +1,12 @@
+class: StoredWorkspaceInvitation
+table: workspace_invitations
+fields:
+  workspaceId: int
+  email: String
+  role: String
+  status: String
+  invitationTokenHash: String
+  createdByUserId: int
+  expiresAt: DateTime
+  createdAt: DateTime
+  acceptedAt: DateTime?

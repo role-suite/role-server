@@ -1,0 +1,6 @@
+class: CreateWorkspaceExportRequest
+fields:
+  workspaceId: int
+  format: String?
+  includeCollections: bool?
+  includeEnvironments: bool?

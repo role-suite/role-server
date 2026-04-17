@@ -1,0 +1,4 @@
+class: ConvertWorkspaceToTeamRequest
+fields:
+  workspaceId: int
+  name: String?

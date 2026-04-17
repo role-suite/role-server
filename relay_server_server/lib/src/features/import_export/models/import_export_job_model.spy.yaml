@@ -1,0 +1,11 @@
+class: ImportExportJobModel
+fields:
+  id: int
+  workspaceId: int
+  type: String
+  status: String
+  format: String
+  summaryJson: String
+  createdByUserId: int
+  createdAt: DateTime
+  completedAt: DateTime

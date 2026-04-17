@@ -1,0 +1,10 @@
+class: StoredAuthSession
+table: auth_sessions
+fields:
+  userId: int
+  workspaceId: int
+  refreshTokenHash: String
+  expiresAt: DateTime
+  createdAt: DateTime
+  updatedAt: DateTime
+  revokedAt: DateTime?

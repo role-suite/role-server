@@ -1,0 +1,6 @@
+class: AuthTokenPair
+fields:
+  accessToken: String
+  refreshToken: String
+  accessTokenExpiresAt: DateTime
+  refreshTokenExpiresAt: DateTime

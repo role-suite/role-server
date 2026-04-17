@@ -1,14 +1,9 @@
-# One row per user collection. Used by CollectionRepository and workspace assembly.
 class: StoredCollection
-table: stored_collection
+table: collections
 fields:
-  userId: int
-  collectionId: String
+  workspaceId: int
   name: String
-  description: String
+  description: String?
+  createdByUserId: int
   createdAt: DateTime
   updatedAt: DateTime
-indexes:
-  stored_collection_user_id_collection_id_idx:
-    fields: userId, collectionId
-    unique: true

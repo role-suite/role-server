@@ -1,0 +1,4 @@
+class: CreateEnvironmentRequest
+fields:
+  workspaceId: int
+  name: String

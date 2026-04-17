@@ -1,0 +1,4 @@
+class: WorkspaceInvitationIssueModel
+fields:
+  invitation: WorkspaceInvitationModel
+  invitationToken: String

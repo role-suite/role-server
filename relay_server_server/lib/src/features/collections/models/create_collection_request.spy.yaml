@@ -1,0 +1,5 @@
+class: CreateCollectionRequest
+fields:
+  workspaceId: int
+  name: String
+  description: String?

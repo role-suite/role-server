@@ -10,403 +10,616 @@
 // ignore_for_file: invalid_use_of_internal_member
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod_auth_idp_client/serverpod_auth_idp_client.dart'
-    as _i1;
-import 'package:serverpod_client/serverpod_client.dart' as _i2;
-import 'dart:async' as _i3;
-import 'package:serverpod_auth_core_client/serverpod_auth_core_client.dart'
+import 'package:serverpod_client/serverpod_client.dart' as _i1;
+import 'dart:async' as _i2;
+import 'package:relay_server_client/src/protocol/features/auth/models/auth_token_pair.dart'
+    as _i3;
+import 'package:relay_server_client/src/protocol/features/auth/models/auth_register_request.dart'
     as _i4;
-import 'package:relay_server_client/src/protocol/features/collections/models/collection_model.dart'
+import 'package:relay_server_client/src/protocol/features/auth/models/auth_login_request.dart'
     as _i5;
-import 'package:relay_server_client/src/protocol/features/environments/models/environment_model.dart'
+import 'package:relay_server_client/src/protocol/features/auth/models/auth_refresh_request.dart'
     as _i6;
-import 'package:relay_server_client/src/protocol/features/requests/models/api_request_model.dart'
+import 'package:relay_server_client/src/protocol/features/auth/models/auth_user_model.dart'
     as _i7;
-import 'package:relay_server_client/src/protocol/features/workspace/models/workspace_bundle.dart'
+import 'package:relay_server_client/src/protocol/features/collections/models/collection_model.dart'
     as _i8;
-import 'protocol.dart' as _i9;
+import 'package:relay_server_client/src/protocol/features/collections/models/create_collection_request.dart'
+    as _i9;
+import 'package:relay_server_client/src/protocol/features/collections/models/update_collection_request.dart'
+    as _i10;
+import 'package:relay_server_client/src/protocol/features/collections/models/collection_folder_model.dart'
+    as _i11;
+import 'package:relay_server_client/src/protocol/features/collections/models/create_collection_folder_request.dart'
+    as _i12;
+import 'package:relay_server_client/src/protocol/features/collections/models/update_collection_folder_request.dart'
+    as _i13;
+import 'package:relay_server_client/src/protocol/features/collections/models/collection_endpoint_model.dart'
+    as _i14;
+import 'package:relay_server_client/src/protocol/features/collections/models/create_collection_endpoint_request.dart'
+    as _i15;
+import 'package:relay_server_client/src/protocol/features/collections/models/update_collection_endpoint_request.dart'
+    as _i16;
+import 'package:relay_server_client/src/protocol/features/collections/models/collection_endpoint_example_model.dart'
+    as _i17;
+import 'package:relay_server_client/src/protocol/features/collections/models/create_collection_endpoint_example_request.dart'
+    as _i18;
+import 'package:relay_server_client/src/protocol/features/collections/models/update_collection_endpoint_example_request.dart'
+    as _i19;
+import 'package:relay_server_client/src/protocol/features/environments/models/environment_model.dart'
+    as _i20;
+import 'package:relay_server_client/src/protocol/features/environments/models/create_environment_request.dart'
+    as _i21;
+import 'package:relay_server_client/src/protocol/features/environments/models/update_environment_request.dart'
+    as _i22;
+import 'package:relay_server_client/src/protocol/features/environments/models/environment_variable_model.dart'
+    as _i23;
+import 'package:relay_server_client/src/protocol/features/environments/models/create_environment_variable_request.dart'
+    as _i24;
+import 'package:relay_server_client/src/protocol/features/environments/models/update_environment_variable_request.dart'
+    as _i25;
+import 'package:relay_server_client/src/protocol/features/import_export/models/import_export_job_model.dart'
+    as _i26;
+import 'package:relay_server_client/src/protocol/features/import_export/models/create_workspace_export_request.dart'
+    as _i27;
+import 'package:relay_server_client/src/protocol/features/import_export/models/create_workspace_import_request.dart'
+    as _i28;
+import 'package:relay_server_client/src/protocol/features/runs/models/request_run_model.dart'
+    as _i29;
+import 'package:relay_server_client/src/protocol/features/runs/models/request_run_detail_model.dart'
+    as _i30;
+import 'package:relay_server_client/src/protocol/features/runs/models/create_request_run_request.dart'
+    as _i31;
+import 'package:relay_server_client/src/protocol/features/workspaces/models/workspace_model.dart'
+    as _i32;
+import 'package:relay_server_client/src/protocol/features/workspaces/models/create_workspace_request.dart'
+    as _i33;
+import 'package:relay_server_client/src/protocol/features/workspaces/models/workspace_member_model.dart'
+    as _i34;
+import 'package:relay_server_client/src/protocol/features/workspaces/models/workspace_invitation_issue_model.dart'
+    as _i35;
+import 'package:relay_server_client/src/protocol/features/workspaces/models/create_workspace_invitation_request.dart'
+    as _i36;
+import 'package:relay_server_client/src/protocol/features/workspaces/models/accept_workspace_invitation_request.dart'
+    as _i37;
+import 'package:relay_server_client/src/protocol/features/workspaces/models/update_workspace_member_role_request.dart'
+    as _i38;
+import 'package:relay_server_client/src/protocol/features/workspaces/models/convert_workspace_to_team_request.dart'
+    as _i39;
+import 'package:relay_server_client/src/protocol/features/workspaces/models/workspace_event_model.dart'
+    as _i40;
+import 'package:relay_server_client/src/protocol/features/workspaces/models/workspace_updates_query.dart'
+    as _i41;
+import 'package:serverpod_auth_idp_client/serverpod_auth_idp_client.dart'
+    as _i42;
+import 'package:serverpod_auth_core_client/serverpod_auth_core_client.dart'
+    as _i43;
+import 'protocol.dart' as _i44;
 
-/// Exposes the email identity provider (register / login with email) on the server.
-/// Configure in [server.dart] via [initializeAuthServices] with [EmailIdpConfig] or [EmailIdpConfigFromPasswords].
 /// {@category Endpoint}
-class EndpointEmailIdp extends _i1.EndpointEmailIdpBase {
-  EndpointEmailIdp(_i2.EndpointCaller caller) : super(caller);
+class EndpointAuth extends _i1.EndpointRef {
+  EndpointAuth(_i1.EndpointCaller caller) : super(caller);
 
   @override
-  String get name => 'emailIdp';
+  String get name => 'auth';
 
-  /// Logs in the user and returns a new session.
-  ///
-  /// Throws an [EmailAccountLoginException] in case of errors, with reason:
-  /// - [EmailAccountLoginExceptionReason.invalidCredentials] if the email or
-  ///   password is incorrect.
-  /// - [EmailAccountLoginExceptionReason.tooManyAttempts] if there have been
-  ///   too many failed login attempts.
-  ///
-  /// Throws an [AuthUserBlockedException] if the auth user is blocked.
-  @override
-  _i3.Future<_i4.AuthSuccess> login({
-    required String email,
-    required String password,
-  }) => caller.callServerEndpoint<_i4.AuthSuccess>(
-    'emailIdp',
-    'login',
-    {
-      'email': email,
-      'password': password,
-    },
-  );
-
-  /// Starts the registration for a new user account with an email-based login
-  /// associated to it.
-  ///
-  /// Upon successful completion of this method, an email will have been
-  /// sent to [email] with a verification link, which the user must open to
-  /// complete the registration.
-  ///
-  /// Always returns a account request ID, which can be used to complete the
-  /// registration. If the email is already registered, the returned ID will not
-  /// be valid.
-  @override
-  _i3.Future<_i2.UuidValue> startRegistration({required String email}) =>
-      caller.callServerEndpoint<_i2.UuidValue>(
-        'emailIdp',
-        'startRegistration',
-        {'email': email},
+  _i2.Future<_i3.AuthTokenPair> register(_i4.AuthRegisterRequest request) =>
+      caller.callServerEndpoint<_i3.AuthTokenPair>(
+        'auth',
+        'register',
+        {'request': request},
+        authenticated: false,
       );
 
-  /// Verifies an account request code and returns a token
-  /// that can be used to complete the account creation.
-  ///
-  /// Throws an [EmailAccountRequestException] in case of errors, with reason:
-  /// - [EmailAccountRequestExceptionReason.expired] if the account request has
-  ///   already expired.
-  /// - [EmailAccountRequestExceptionReason.policyViolation] if the password
-  ///   does not comply with the password policy.
-  /// - [EmailAccountRequestExceptionReason.invalid] if no request exists
-  ///   for the given [accountRequestId] or [verificationCode] is invalid.
-  @override
-  _i3.Future<String> verifyRegistrationCode({
-    required _i2.UuidValue accountRequestId,
-    required String verificationCode,
-  }) => caller.callServerEndpoint<String>(
-    'emailIdp',
-    'verifyRegistrationCode',
-    {
-      'accountRequestId': accountRequestId,
-      'verificationCode': verificationCode,
-    },
-  );
-
-  /// Completes a new account registration, creating a new auth user with a
-  /// profile and attaching the given email account to it.
-  ///
-  /// Throws an [EmailAccountRequestException] in case of errors, with reason:
-  /// - [EmailAccountRequestExceptionReason.expired] if the account request has
-  ///   already expired.
-  /// - [EmailAccountRequestExceptionReason.policyViolation] if the password
-  ///   does not comply with the password policy.
-  /// - [EmailAccountRequestExceptionReason.invalid] if the [registrationToken]
-  ///   is invalid.
-  ///
-  /// Throws an [AuthUserBlockedException] if the auth user is blocked.
-  ///
-  /// Returns a session for the newly created user.
-  @override
-  _i3.Future<_i4.AuthSuccess> finishRegistration({
-    required String registrationToken,
-    required String password,
-  }) => caller.callServerEndpoint<_i4.AuthSuccess>(
-    'emailIdp',
-    'finishRegistration',
-    {
-      'registrationToken': registrationToken,
-      'password': password,
-    },
-  );
-
-  /// Requests a password reset for [email].
-  ///
-  /// If the email address is registered, an email with reset instructions will
-  /// be send out. If the email is unknown, this method will have no effect.
-  ///
-  /// Always returns a password reset request ID, which can be used to complete
-  /// the reset. If the email is not registered, the returned ID will not be
-  /// valid.
-  ///
-  /// Throws an [EmailAccountPasswordResetException] in case of errors, with reason:
-  /// - [EmailAccountPasswordResetExceptionReason.tooManyAttempts] if the user has
-  ///   made too many attempts trying to request a password reset.
-  ///
-  @override
-  _i3.Future<_i2.UuidValue> startPasswordReset({required String email}) =>
-      caller.callServerEndpoint<_i2.UuidValue>(
-        'emailIdp',
-        'startPasswordReset',
-        {'email': email},
+  _i2.Future<_i3.AuthTokenPair> login(_i5.AuthLoginRequest request) =>
+      caller.callServerEndpoint<_i3.AuthTokenPair>(
+        'auth',
+        'login',
+        {'request': request},
+        authenticated: false,
       );
 
-  /// Verifies a password reset code and returns a finishPasswordResetToken
-  /// that can be used to finish the password reset.
-  ///
-  /// Throws an [EmailAccountPasswordResetException] in case of errors, with reason:
-  /// - [EmailAccountPasswordResetExceptionReason.expired] if the password reset
-  ///   request has already expired.
-  /// - [EmailAccountPasswordResetExceptionReason.tooManyAttempts] if the user has
-  ///   made too many attempts trying to verify the password reset.
-  /// - [EmailAccountPasswordResetExceptionReason.invalid] if no request exists
-  ///   for the given [passwordResetRequestId] or [verificationCode] is invalid.
-  ///
-  /// If multiple steps are required to complete the password reset, this endpoint
-  /// should be overridden to return credentials for the next step instead
-  /// of the credentials for setting the password.
-  @override
-  _i3.Future<String> verifyPasswordResetCode({
-    required _i2.UuidValue passwordResetRequestId,
-    required String verificationCode,
-  }) => caller.callServerEndpoint<String>(
-    'emailIdp',
-    'verifyPasswordResetCode',
-    {
-      'passwordResetRequestId': passwordResetRequestId,
-      'verificationCode': verificationCode,
-    },
-  );
+  _i2.Future<_i3.AuthTokenPair> refresh(_i6.AuthRefreshRequest request) =>
+      caller.callServerEndpoint<_i3.AuthTokenPair>(
+        'auth',
+        'refresh',
+        {'request': request},
+        authenticated: false,
+      );
 
-  /// Completes a password reset request by setting a new password.
-  ///
-  /// The [verificationCode] returned from [verifyPasswordResetCode] is used to
-  /// validate the password reset request.
-  ///
-  /// Throws an [EmailAccountPasswordResetException] in case of errors, with reason:
-  /// - [EmailAccountPasswordResetExceptionReason.expired] if the password reset
-  ///   request has already expired.
-  /// - [EmailAccountPasswordResetExceptionReason.policyViolation] if the new
-  ///   password does not comply with the password policy.
-  /// - [EmailAccountPasswordResetExceptionReason.invalid] if no request exists
-  ///   for the given [passwordResetRequestId] or [verificationCode] is invalid.
-  ///
-  /// Throws an [AuthUserBlockedException] if the auth user is blocked.
-  @override
-  _i3.Future<void> finishPasswordReset({
-    required String finishPasswordResetToken,
-    required String newPassword,
-  }) => caller.callServerEndpoint<void>(
-    'emailIdp',
-    'finishPasswordReset',
-    {
-      'finishPasswordResetToken': finishPasswordResetToken,
-      'newPassword': newPassword,
-    },
-  );
+  _i2.Future<void> logout(_i6.AuthRefreshRequest request) =>
+      caller.callServerEndpoint<void>(
+        'auth',
+        'logout',
+        {'request': request},
+        authenticated: false,
+      );
+
+  _i2.Future<_i7.AuthUserModel> me() =>
+      caller.callServerEndpoint<_i7.AuthUserModel>(
+        'auth',
+        'me',
+        {},
+      );
 }
 
-/// Exposes JWT refresh (access + refresh tokens) for the auth module.
-/// Required when using [JwtConfig] or [JwtConfigFromPasswords] in [initializeAuthServices].
 /// {@category Endpoint}
-class EndpointRefreshJwtTokens extends _i4.EndpointRefreshJwtTokens {
-  EndpointRefreshJwtTokens(_i2.EndpointCaller caller) : super(caller);
-
-  @override
-  String get name => 'refreshJwtTokens';
-
-  /// Creates a new token pair for the given [refreshToken].
-  ///
-  /// Can throw the following exceptions:
-  /// -[RefreshTokenMalformedException]: refresh token is malformed and could
-  ///   not be parsed. Not expected to happen for tokens issued by the server.
-  /// -[RefreshTokenNotFoundException]: refresh token is unknown to the server.
-  ///   Either the token was deleted or generated by a different server.
-  /// -[RefreshTokenExpiredException]: refresh token has expired. Will happen
-  ///   only if it has not been used within configured `refreshTokenLifetime`.
-  /// -[RefreshTokenInvalidSecretException]: refresh token is incorrect, meaning
-  ///   it does not refer to the current secret refresh token. This indicates
-  ///   either a malfunctioning client or a malicious attempt by someone who has
-  ///   obtained the refresh token. In this case the underlying refresh token
-  ///   will be deleted, and access to it will expire fully when the last access
-  ///   token is elapsed.
-  ///
-  /// This endpoint is unauthenticated, meaning the client won't include any
-  /// authentication information with the call.
-  @override
-  _i3.Future<_i4.AuthSuccess> refreshAccessToken({
-    required String refreshToken,
-  }) => caller.callServerEndpoint<_i4.AuthSuccess>(
-    'refreshJwtTokens',
-    'refreshAccessToken',
-    {'refreshToken': refreshToken},
-    authenticated: false,
-  );
-}
-
-/// CRUD endpoint for collections per user.
-/// {@category Endpoint}
-class EndpointCollections extends _i2.EndpointRef {
-  EndpointCollections(_i2.EndpointCaller caller) : super(caller);
+class EndpointCollections extends _i1.EndpointRef {
+  EndpointCollections(_i1.EndpointCaller caller) : super(caller);
 
   @override
   String get name => 'collections';
 
-  _i3.Future<List<_i5.CollectionModel>> list() =>
-      caller.callServerEndpoint<List<_i5.CollectionModel>>(
+  _i2.Future<List<_i8.CollectionModel>> list(int workspaceId) =>
+      caller.callServerEndpoint<List<_i8.CollectionModel>>(
         'collections',
         'list',
-        {},
+        {'workspaceId': workspaceId},
       );
 
-  _i3.Future<_i5.CollectionModel?> get(String collectionId) =>
-      caller.callServerEndpoint<_i5.CollectionModel?>(
-        'collections',
-        'get',
-        {'collectionId': collectionId},
-      );
+  _i2.Future<_i8.CollectionModel> get(
+    int workspaceId,
+    int collectionId,
+  ) => caller.callServerEndpoint<_i8.CollectionModel>(
+    'collections',
+    'get',
+    {
+      'workspaceId': workspaceId,
+      'collectionId': collectionId,
+    },
+  );
 
-  _i3.Future<void> create(_i5.CollectionModel collection) =>
-      caller.callServerEndpoint<void>(
+  _i2.Future<_i8.CollectionModel> create(_i9.CreateCollectionRequest request) =>
+      caller.callServerEndpoint<_i8.CollectionModel>(
         'collections',
         'create',
-        {'collection': collection},
+        {'request': request},
       );
 
-  _i3.Future<void> update(_i5.CollectionModel collection) =>
-      caller.callServerEndpoint<void>(
-        'collections',
-        'update',
-        {'collection': collection},
-      );
+  _i2.Future<_i8.CollectionModel> update(
+    _i10.UpdateCollectionRequest request,
+  ) => caller.callServerEndpoint<_i8.CollectionModel>(
+    'collections',
+    'update',
+    {'request': request},
+  );
 
-  _i3.Future<void> delete(String collectionId) =>
-      caller.callServerEndpoint<void>(
-        'collections',
-        'delete',
-        {'collectionId': collectionId},
-      );
+  _i2.Future<void> remove(
+    int workspaceId,
+    int collectionId,
+  ) => caller.callServerEndpoint<void>(
+    'collections',
+    'remove',
+    {
+      'workspaceId': workspaceId,
+      'collectionId': collectionId,
+    },
+  );
+
+  _i2.Future<List<_i11.CollectionFolderModel>> listFolders(
+    int workspaceId,
+    int collectionId,
+  ) => caller.callServerEndpoint<List<_i11.CollectionFolderModel>>(
+    'collections',
+    'listFolders',
+    {
+      'workspaceId': workspaceId,
+      'collectionId': collectionId,
+    },
+  );
+
+  _i2.Future<_i11.CollectionFolderModel> createFolder(
+    _i12.CreateCollectionFolderRequest request,
+  ) => caller.callServerEndpoint<_i11.CollectionFolderModel>(
+    'collections',
+    'createFolder',
+    {'request': request},
+  );
+
+  _i2.Future<_i11.CollectionFolderModel> updateFolder(
+    _i13.UpdateCollectionFolderRequest request,
+  ) => caller.callServerEndpoint<_i11.CollectionFolderModel>(
+    'collections',
+    'updateFolder',
+    {'request': request},
+  );
+
+  _i2.Future<void> removeFolder(
+    int workspaceId,
+    int collectionId,
+    int folderId,
+  ) => caller.callServerEndpoint<void>(
+    'collections',
+    'removeFolder',
+    {
+      'workspaceId': workspaceId,
+      'collectionId': collectionId,
+      'folderId': folderId,
+    },
+  );
+
+  _i2.Future<List<_i14.CollectionEndpointModel>> listEndpoints(
+    int workspaceId,
+    int collectionId,
+  ) => caller.callServerEndpoint<List<_i14.CollectionEndpointModel>>(
+    'collections',
+    'listEndpoints',
+    {
+      'workspaceId': workspaceId,
+      'collectionId': collectionId,
+    },
+  );
+
+  _i2.Future<_i14.CollectionEndpointModel> createEndpoint(
+    _i15.CreateCollectionEndpointRequest request,
+  ) => caller.callServerEndpoint<_i14.CollectionEndpointModel>(
+    'collections',
+    'createEndpoint',
+    {'request': request},
+  );
+
+  _i2.Future<_i14.CollectionEndpointModel> updateEndpoint(
+    _i16.UpdateCollectionEndpointRequest request,
+  ) => caller.callServerEndpoint<_i14.CollectionEndpointModel>(
+    'collections',
+    'updateEndpoint',
+    {'request': request},
+  );
+
+  _i2.Future<void> removeEndpoint(
+    int workspaceId,
+    int collectionId,
+    int endpointId,
+  ) => caller.callServerEndpoint<void>(
+    'collections',
+    'removeEndpoint',
+    {
+      'workspaceId': workspaceId,
+      'collectionId': collectionId,
+      'endpointId': endpointId,
+    },
+  );
+
+  _i2.Future<List<_i17.CollectionEndpointExampleModel>> listEndpointExamples(
+    int workspaceId,
+    int collectionId,
+    int endpointId,
+  ) => caller.callServerEndpoint<List<_i17.CollectionEndpointExampleModel>>(
+    'collections',
+    'listEndpointExamples',
+    {
+      'workspaceId': workspaceId,
+      'collectionId': collectionId,
+      'endpointId': endpointId,
+    },
+  );
+
+  _i2.Future<_i17.CollectionEndpointExampleModel> createEndpointExample(
+    _i18.CreateCollectionEndpointExampleRequest request,
+  ) => caller.callServerEndpoint<_i17.CollectionEndpointExampleModel>(
+    'collections',
+    'createEndpointExample',
+    {'request': request},
+  );
+
+  _i2.Future<_i17.CollectionEndpointExampleModel> updateEndpointExample(
+    _i19.UpdateCollectionEndpointExampleRequest request,
+  ) => caller.callServerEndpoint<_i17.CollectionEndpointExampleModel>(
+    'collections',
+    'updateEndpointExample',
+    {'request': request},
+  );
+
+  _i2.Future<void> removeEndpointExample(
+    int workspaceId,
+    int collectionId,
+    int endpointId,
+    int exampleId,
+  ) => caller.callServerEndpoint<void>(
+    'collections',
+    'removeEndpointExample',
+    {
+      'workspaceId': workspaceId,
+      'collectionId': collectionId,
+      'endpointId': endpointId,
+      'exampleId': exampleId,
+    },
+  );
 }
 
-/// CRUD endpoint for environments per user.
 /// {@category Endpoint}
-class EndpointEnvironments extends _i2.EndpointRef {
-  EndpointEnvironments(_i2.EndpointCaller caller) : super(caller);
+class EndpointEnvironments extends _i1.EndpointRef {
+  EndpointEnvironments(_i1.EndpointCaller caller) : super(caller);
 
   @override
   String get name => 'environments';
 
-  _i3.Future<List<_i6.EnvironmentModel>> list() =>
-      caller.callServerEndpoint<List<_i6.EnvironmentModel>>(
+  _i2.Future<List<_i20.EnvironmentModel>> list(int workspaceId) =>
+      caller.callServerEndpoint<List<_i20.EnvironmentModel>>(
         'environments',
         'list',
-        {},
+        {'workspaceId': workspaceId},
       );
 
-  _i3.Future<_i6.EnvironmentModel?> get(String name) =>
-      caller.callServerEndpoint<_i6.EnvironmentModel?>(
-        'environments',
-        'get',
-        {'name': name},
-      );
-
-  _i3.Future<void> create(_i6.EnvironmentModel environment) =>
-      caller.callServerEndpoint<void>(
-        'environments',
-        'create',
-        {'environment': environment},
-      );
-
-  _i3.Future<void> update(_i6.EnvironmentModel environment) =>
-      caller.callServerEndpoint<void>(
-        'environments',
-        'update',
-        {'environment': environment},
-      );
-
-  _i3.Future<void> delete(String name) => caller.callServerEndpoint<void>(
+  _i2.Future<_i20.EnvironmentModel> get(
+    int workspaceId,
+    int environmentId,
+  ) => caller.callServerEndpoint<_i20.EnvironmentModel>(
     'environments',
-    'delete',
-    {'name': name},
+    'get',
+    {
+      'workspaceId': workspaceId,
+      'environmentId': environmentId,
+    },
+  );
+
+  _i2.Future<_i20.EnvironmentModel> create(
+    _i21.CreateEnvironmentRequest request,
+  ) => caller.callServerEndpoint<_i20.EnvironmentModel>(
+    'environments',
+    'create',
+    {'request': request},
+  );
+
+  _i2.Future<_i20.EnvironmentModel> update(
+    _i22.UpdateEnvironmentRequest request,
+  ) => caller.callServerEndpoint<_i20.EnvironmentModel>(
+    'environments',
+    'update',
+    {'request': request},
+  );
+
+  _i2.Future<void> remove(
+    int workspaceId,
+    int environmentId,
+  ) => caller.callServerEndpoint<void>(
+    'environments',
+    'remove',
+    {
+      'workspaceId': workspaceId,
+      'environmentId': environmentId,
+    },
+  );
+
+  _i2.Future<List<_i23.EnvironmentVariableModel>> listVariables(
+    int workspaceId,
+    int environmentId,
+  ) => caller.callServerEndpoint<List<_i23.EnvironmentVariableModel>>(
+    'environments',
+    'listVariables',
+    {
+      'workspaceId': workspaceId,
+      'environmentId': environmentId,
+    },
+  );
+
+  _i2.Future<_i23.EnvironmentVariableModel> createVariable(
+    _i24.CreateEnvironmentVariableRequest request,
+  ) => caller.callServerEndpoint<_i23.EnvironmentVariableModel>(
+    'environments',
+    'createVariable',
+    {'request': request},
+  );
+
+  _i2.Future<_i23.EnvironmentVariableModel> updateVariable(
+    _i25.UpdateEnvironmentVariableRequest request,
+  ) => caller.callServerEndpoint<_i23.EnvironmentVariableModel>(
+    'environments',
+    'updateVariable',
+    {'request': request},
+  );
+
+  _i2.Future<void> removeVariable(
+    int workspaceId,
+    int environmentId,
+    int variableId,
+  ) => caller.callServerEndpoint<void>(
+    'environments',
+    'removeVariable',
+    {
+      'workspaceId': workspaceId,
+      'environmentId': environmentId,
+      'variableId': variableId,
+    },
   );
 }
 
-/// CRUD endpoint for requests per user (scoped by collection).
 /// {@category Endpoint}
-class EndpointRequests extends _i2.EndpointRef {
-  EndpointRequests(_i2.EndpointCaller caller) : super(caller);
+class EndpointImportExport extends _i1.EndpointRef {
+  EndpointImportExport(_i1.EndpointCaller caller) : super(caller);
 
   @override
-  String get name => 'requests';
+  String get name => 'importExport';
 
-  _i3.Future<List<_i7.ApiRequestModel>> list(String collectionId) =>
-      caller.callServerEndpoint<List<_i7.ApiRequestModel>>(
-        'requests',
+  _i2.Future<List<_i26.ImportExportJobModel>> listJobs(int workspaceId) =>
+      caller.callServerEndpoint<List<_i26.ImportExportJobModel>>(
+        'importExport',
+        'listJobs',
+        {'workspaceId': workspaceId},
+      );
+
+  _i2.Future<_i26.ImportExportJobModel> getJobById(
+    int workspaceId,
+    int jobId,
+  ) => caller.callServerEndpoint<_i26.ImportExportJobModel>(
+    'importExport',
+    'getJobById',
+    {
+      'workspaceId': workspaceId,
+      'jobId': jobId,
+    },
+  );
+
+  _i2.Future<_i26.ImportExportJobModel> createExport(
+    _i27.CreateWorkspaceExportRequest request,
+  ) => caller.callServerEndpoint<_i26.ImportExportJobModel>(
+    'importExport',
+    'createExport',
+    {'request': request},
+  );
+
+  _i2.Future<_i26.ImportExportJobModel> createImport(
+    _i28.CreateWorkspaceImportRequest request,
+  ) => caller.callServerEndpoint<_i26.ImportExportJobModel>(
+    'importExport',
+    'createImport',
+    {'request': request},
+  );
+}
+
+/// {@category Endpoint}
+class EndpointRuns extends _i1.EndpointRef {
+  EndpointRuns(_i1.EndpointCaller caller) : super(caller);
+
+  @override
+  String get name => 'runs';
+
+  _i2.Future<List<_i29.RequestRunModel>> list(int workspaceId) =>
+      caller.callServerEndpoint<List<_i29.RequestRunModel>>(
+        'runs',
         'list',
-        {'collectionId': collectionId},
+        {'workspaceId': workspaceId},
       );
 
-  _i3.Future<_i7.ApiRequestModel?> get(String requestId) =>
-      caller.callServerEndpoint<_i7.ApiRequestModel?>(
-        'requests',
+  _i2.Future<_i30.RequestRunDetailModel> get(
+    int workspaceId,
+    int runId,
+  ) => caller.callServerEndpoint<_i30.RequestRunDetailModel>(
+    'runs',
+    'get',
+    {
+      'workspaceId': workspaceId,
+      'runId': runId,
+    },
+  );
+
+  _i2.Future<_i30.RequestRunDetailModel> create(
+    _i31.CreateRequestRunRequest request,
+  ) => caller.callServerEndpoint<_i30.RequestRunDetailModel>(
+    'runs',
+    'create',
+    {'request': request},
+  );
+
+  _i2.Future<_i29.RequestRunModel> cancel(
+    int workspaceId,
+    int runId,
+  ) => caller.callServerEndpoint<_i29.RequestRunModel>(
+    'runs',
+    'cancel',
+    {
+      'workspaceId': workspaceId,
+      'runId': runId,
+    },
+  );
+}
+
+/// {@category Endpoint}
+class EndpointWorkspaces extends _i1.EndpointRef {
+  EndpointWorkspaces(_i1.EndpointCaller caller) : super(caller);
+
+  @override
+  String get name => 'workspaces';
+
+  _i2.Future<List<_i32.WorkspaceModel>> list() =>
+      caller.callServerEndpoint<List<_i32.WorkspaceModel>>(
+        'workspaces',
+        'list',
+        {},
+      );
+
+  _i2.Future<_i32.WorkspaceModel> get(int workspaceId) =>
+      caller.callServerEndpoint<_i32.WorkspaceModel>(
+        'workspaces',
         'get',
-        {'requestId': requestId},
+        {'workspaceId': workspaceId},
       );
 
-  _i3.Future<void> create(_i7.ApiRequestModel request) =>
-      caller.callServerEndpoint<void>(
-        'requests',
+  _i2.Future<_i32.WorkspaceModel> create(_i33.CreateWorkspaceRequest request) =>
+      caller.callServerEndpoint<_i32.WorkspaceModel>(
+        'workspaces',
         'create',
         {'request': request},
       );
 
-  _i3.Future<void> update(_i7.ApiRequestModel request) =>
-      caller.callServerEndpoint<void>(
-        'requests',
-        'update',
-        {'request': request},
+  _i2.Future<List<_i34.WorkspaceMemberModel>> listMembers(int workspaceId) =>
+      caller.callServerEndpoint<List<_i34.WorkspaceMemberModel>>(
+        'workspaces',
+        'listMembers',
+        {'workspaceId': workspaceId},
       );
 
-  _i3.Future<void> delete(String requestId) => caller.callServerEndpoint<void>(
-    'requests',
-    'delete',
-    {'requestId': requestId},
+  _i2.Future<_i35.WorkspaceInvitationIssueModel> createInvitation(
+    _i36.CreateWorkspaceInvitationRequest request,
+  ) => caller.callServerEndpoint<_i35.WorkspaceInvitationIssueModel>(
+    'workspaces',
+    'createInvitation',
+    {'request': request},
   );
-}
 
-/// Endpoint for syncing Röle workspace (collections + requests + environments).
-/// Delegates storage to [WorkspaceRepository] (database) and user identity to [SessionHelper].
-/// {@category Endpoint}
-class EndpointWorkspace extends _i2.EndpointRef {
-  EndpointWorkspace(_i2.EndpointCaller caller) : super(caller);
+  _i2.Future<_i32.WorkspaceModel> acceptInvitation(
+    _i37.AcceptWorkspaceInvitationRequest request,
+  ) => caller.callServerEndpoint<_i32.WorkspaceModel>(
+    'workspaces',
+    'acceptInvitation',
+    {'request': request},
+  );
 
-  @override
-  String get name => 'workspace';
+  _i2.Future<_i34.WorkspaceMemberModel> updateMemberRole(
+    _i38.UpdateWorkspaceMemberRoleRequest request,
+  ) => caller.callServerEndpoint<_i34.WorkspaceMemberModel>(
+    'workspaces',
+    'updateMemberRole',
+    {'request': request},
+  );
 
-  /// Pull the current user's workspace from the server.
-  _i3.Future<_i8.WorkspaceBundle?> pullWorkspace() =>
-      caller.callServerEndpoint<_i8.WorkspaceBundle?>(
-        'workspace',
-        'pullWorkspace',
-        {},
-      );
+  _i2.Future<void> removeMember(
+    int workspaceId,
+    int memberUserId,
+  ) => caller.callServerEndpoint<void>(
+    'workspaces',
+    'removeMember',
+    {
+      'workspaceId': workspaceId,
+      'memberUserId': memberUserId,
+    },
+  );
 
-  /// Push (overwrite) the current user's workspace on the server.
-  _i3.Future<void> pushWorkspace(_i8.WorkspaceBundle bundle) =>
-      caller.callServerEndpoint<void>(
-        'workspace',
-        'pushWorkspace',
-        {'bundle': bundle},
-      );
+  _i2.Future<void> leave(int workspaceId) => caller.callServerEndpoint<void>(
+    'workspaces',
+    'leave',
+    {'workspaceId': workspaceId},
+  );
+
+  _i2.Future<_i32.WorkspaceModel> convertToTeam(
+    _i39.ConvertWorkspaceToTeamRequest request,
+  ) => caller.callServerEndpoint<_i32.WorkspaceModel>(
+    'workspaces',
+    'convertToTeam',
+    {'request': request},
+  );
+
+  _i2.Future<List<_i40.WorkspaceEventModel>> listUpdates(
+    _i41.WorkspaceUpdatesQuery query,
+  ) => caller.callServerEndpoint<List<_i40.WorkspaceEventModel>>(
+    'workspaces',
+    'listUpdates',
+    {'query': query},
+  );
 }
 
 class Modules {
   Modules(Client client) {
-    serverpod_auth_idp = _i1.Caller(client);
-    serverpod_auth_core = _i4.Caller(client);
+    serverpod_auth_idp = _i42.Caller(client);
+    serverpod_auth_core = _i43.Caller(client);
   }
 
-  late final _i1.Caller serverpod_auth_idp;
+  late final _i42.Caller serverpod_auth_idp;
 
-  late final _i4.Caller serverpod_auth_core;
+  late final _i43.Caller serverpod_auth_core;
 }
 
-class Client extends _i2.ServerpodClientShared {
+class Client extends _i1.ServerpodClientShared {
   Client(
     String host, {
     dynamic securityContext,
@@ -417,16 +630,16 @@ class Client extends _i2.ServerpodClientShared {
     Duration? streamingConnectionTimeout,
     Duration? connectionTimeout,
     Function(
-      _i2.MethodCallContext,
+      _i1.MethodCallContext,
       Object,
       StackTrace,
     )?
     onFailedCall,
-    Function(_i2.MethodCallContext)? onSucceededCall,
+    Function(_i1.MethodCallContext)? onSucceededCall,
     bool? disconnectStreamsOnLostInternetConnection,
   }) : super(
          host,
-         _i9.Protocol(),
+         _i44.Protocol(),
          securityContext: securityContext,
          streamingConnectionTimeout: streamingConnectionTimeout,
          connectionTimeout: connectionTimeout,
@@ -435,41 +648,41 @@ class Client extends _i2.ServerpodClientShared {
          disconnectStreamsOnLostInternetConnection:
              disconnectStreamsOnLostInternetConnection,
        ) {
-    emailIdp = EndpointEmailIdp(this);
-    refreshJwtTokens = EndpointRefreshJwtTokens(this);
+    auth = EndpointAuth(this);
     collections = EndpointCollections(this);
     environments = EndpointEnvironments(this);
-    requests = EndpointRequests(this);
-    workspace = EndpointWorkspace(this);
+    importExport = EndpointImportExport(this);
+    runs = EndpointRuns(this);
+    workspaces = EndpointWorkspaces(this);
     modules = Modules(this);
   }
 
-  late final EndpointEmailIdp emailIdp;
-
-  late final EndpointRefreshJwtTokens refreshJwtTokens;
+  late final EndpointAuth auth;
 
   late final EndpointCollections collections;
 
   late final EndpointEnvironments environments;
 
-  late final EndpointRequests requests;
+  late final EndpointImportExport importExport;
 
-  late final EndpointWorkspace workspace;
+  late final EndpointRuns runs;
+
+  late final EndpointWorkspaces workspaces;
 
   late final Modules modules;
 
   @override
-  Map<String, _i2.EndpointRef> get endpointRefLookup => {
-    'emailIdp': emailIdp,
-    'refreshJwtTokens': refreshJwtTokens,
+  Map<String, _i1.EndpointRef> get endpointRefLookup => {
+    'auth': auth,
     'collections': collections,
     'environments': environments,
-    'requests': requests,
-    'workspace': workspace,
+    'importExport': importExport,
+    'runs': runs,
+    'workspaces': workspaces,
   };
 
   @override
-  Map<String, _i2.ModuleEndpointCaller> get moduleLookup => {
+  Map<String, _i1.ModuleEndpointCaller> get moduleLookup => {
     'serverpod_auth_idp': modules.serverpod_auth_idp,
     'serverpod_auth_core': modules.serverpod_auth_core,
   };

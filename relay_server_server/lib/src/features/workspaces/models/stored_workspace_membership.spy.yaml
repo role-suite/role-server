@@ -1,0 +1,8 @@
+class: StoredWorkspaceMembership
+table: workspace_memberships
+fields:
+  workspaceId: int
+  userId: int
+  role: String
+  createdAt: DateTime
+  updatedAt: DateTime

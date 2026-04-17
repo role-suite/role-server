@@ -1,0 +1,9 @@
+class: StoredWorkspace
+table: workspaces
+fields:
+  name: String
+  slug: String
+  type: String
+  createdByUserId: int
+  createdAt: DateTime
+  updatedAt: DateTime

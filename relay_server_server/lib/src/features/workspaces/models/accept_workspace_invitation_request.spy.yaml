@@ -1,0 +1,3 @@
+class: AcceptWorkspaceInvitationRequest
+fields:
+  invitationToken: String

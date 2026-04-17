@@ -1,0 +1,5 @@
+class: CreateWorkspaceInvitationRequest
+fields:
+  workspaceId: int
+  email: String
+  role: String

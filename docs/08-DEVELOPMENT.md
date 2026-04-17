@@ -2,26 +2,26 @@
 
 ## Prerequisites
 
-- **Dart SDK** 3.8+ (e.g. from [dart.dev](https://dart.dev) or Flutter SDK).
-- **Serverpod CLI:** `dart pub global activate serverpod_cli` (optional; you can use `dart run serverpod` from the server package).
-- For database mode: **Docker** (for Postgres + Redis via `docker compose`) or local Postgres/Redis.
+- **Dart SDK** 3.8+
+- **Serverpod CLI** (project currently pinned to `3.4.3`)
+- **Docker** (recommended local Postgres/Redis via compose)
 
 ## Local Setup with Database
 
-1. **Clone and enter server package:**
+1. **Enter server package:**
 
    ```bash
-   cd role-server/relay_server_server
+   cd relay_server_server
    ```
 
 2. **Install dependencies and generate code:**
 
    ```bash
    dart pub get
-   dart run serverpod generate
+   serverpod generate
    ```
 
-3. **Config (with DB):**
+3. **Config:**
 
    ```bash
    cp config/development.yaml.example config/development.yaml
@@ -32,7 +32,7 @@
 
 4. **Start Postgres and Redis:**
 
-   From repo root:
+   From repo root (`role-serverpod`):
 
    ```bash
    docker compose up --build --detach
@@ -44,53 +44,37 @@
    dart bin/main.dart --apply-migrations
    ```
 
-6. **Verify:** Open `http://localhost:8082/workspace` (GET); you should get JSON (empty workspace if no auth or user 0). In the Röle app, set API base URL to `http://localhost:8082`.
-
-## Local Setup without Database
-
-1. **Generate and config (no DB):**
+6. **Run server (normal):**
 
    ```bash
-   cd role-server/relay_server_server
-   dart pub get
-   dart run serverpod generate
-   cp config/development_local.yaml.example config/development.yaml
+   dart bin/main.dart
    ```
 
-2. **Start server in-memory:**
+## Authentication Setup
 
-   ```bash
-   RELAY_USE_IN_MEMORY=1 dart bin/main.dart
-   ```
-
-   Do **not** run `--apply-migrations`. Data is lost on restart.
-
-3. **Optional API keys:** Create `.env` with e.g. `RELAY_API_KEYS=dev-key` and load it (e.g. `export $(cat .env | xargs)` or use a tool that injects env). Then use `Authorization: Bearer dev-key` in requests.
+- Access token validation uses `RELAY_AUTH_TOKEN_SECRET` (optional in local dev; set explicitly for shared/staging/prod environments).
+- Runs policy knobs:
+  - `RELAY_RUNNER_ALLOW_PRIVATE_NETWORK` (`false` by default)
+  - `RELAY_RUNNER_MAX_RESPONSE_BYTES` (defaults to `1048576`)
 
 ## Code Generation (Serverpod)
 
-After changing:
-
-- Protocol (`.spy.yaml` files under `lib/src/features/*/models/`),
-- Endpoints (adding/renaming endpoint classes),
-
-run:
+After changing protocol models or endpoint signatures, run:
 
 ```bash
-cd relay_server_server
-dart run serverpod generate
+serverpod generate
 ```
 
 This updates:
 
 - `lib/src/generated/protocol.dart` (and related generated code),
 - `lib/src/generated/endpoints.dart`,
-- Test tools under `test/integration/test_tools/`.
+- generated client protocol under `../relay_server_client/lib/src/protocol/`.
 
 To create a new migration after table changes:
 
 ```bash
-dart run serverpod create-migration
+serverpod create-migration
 ```
 
 ## Code Layout (relay_server_server)
@@ -98,41 +82,41 @@ dart run serverpod create-migration
 | Path | Purpose |
 |------|---------|
 | `bin/main.dart` | Entrypoint; calls `run(args)` from `server.dart`. |
-| `lib/server.dart` | Serverpod init, auth handler, web route registration. |
-| `lib/src/core/` | Shared auth and session: `api_key_auth.dart`, `session_helper.dart`. |
-| `lib/src/features/workspace/` | Workspace REST route, endpoint, repository, JSON conversion, in-memory store. |
-| `lib/src/features/collections/` | Collections endpoint, repository, in-memory store, models. |
-| `lib/src/features/requests/` | Requests endpoint, repository, in-memory store, models. |
-| `lib/src/features/environments/` | Environments endpoint, repository, in-memory store, models. |
+| `lib/server.dart` | Serverpod init and authentication handler wiring. |
+| `lib/src/core/` | Auth context, guards, domain exceptions, shared utilities. |
+| `lib/src/features/auth/` | Auth endpoint, services, repositories, models. |
+| `lib/src/features/workspaces/` | Workspace/team endpoint, services, repositories, models. |
+| `lib/src/features/collections/` | Collection hierarchy endpoint, services, repositories, models. |
+| `lib/src/features/environments/` | Environment/variable endpoint, services, repositories, models. |
+| `lib/src/features/import_export/` | Import/export endpoint, services, repositories, models. |
+| `lib/src/features/runs/` | Run execution endpoint, orchestration services, repositories, models. |
 | `lib/src/generated/` | Generated protocol and endpoints (do not edit by hand). |
 
 Conventions:
 
-- **Endpoints:** One class per feature (e.g. `WorkspaceEndpoint`). Methods take `Session` first, then args. Use `SessionHelper.getUserId(session)` for user scope.
-- **Repositories:** Static methods; switch on `InMemory*Store.useInMemory` to use either DB or in-memory store.
-- **Models:** Defined in `.spy.yaml`; table classes have `table: <name>` and optional `indexes:`.
+- **Endpoints:** One class per feature (`AuthEndpoint`, `WorkspacesEndpoint`, etc.), `Session` first arg.
+- **Services:** Business rules and authorization checks.
+- **Repositories:** DB access only.
+- **Models:** Defined in `.spy.yaml`; persistent models declare `table:`.
 
 ## Testing
 
-- **Unit/Integration:** Tests live under `relay_server_server/test/`. Example: `test/integration/greeting_endpoint_test.dart` uses `withServerpod` from `test_tools/serverpod_test_tools.dart`.
-- **Run tests:**
+- Tests live under `relay_server_server/test/` (current focus is unit-level hardening).
+- Run tests:
 
   ```bash
-  cd relay_server_server
   dart test
   ```
 
-- After changing endpoints or protocol, run `serverpod generate` so test tools stay in sync.
+- Run analyzer:
+
+  ```bash
+  dart analyze
+  ```
 
 ## Linting and Formatting
 
-- **Analyzer:**
-
-  ```bash
-  dart analyze lib/
-  ```
-
-- **Format:**
+- Format:
 
   ```bash
   dart format lib/ test/
@@ -142,4 +126,4 @@ Lint rules are in `analysis_options.yaml` (include `package:lints/recommended.ya
 
 ## relay_server_client
 
-The client package (`relay_server_client/`) holds the shared protocol (models) for the Flutter app. It is updated when you run code generation that affects the protocol; the server does not depend on the client at runtime. If the Röle app uses this client, ensure the client package version matches the server’s protocol.
+The `relay_server_client/` package contains generated endpoint refs and protocol models used by Flutter or other Dart clients. Regenerate from server package whenever endpoint signatures or `.spy.yaml` models change.

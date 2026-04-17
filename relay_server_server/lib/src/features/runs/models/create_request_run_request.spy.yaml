@@ -1,0 +1,13 @@
+class: CreateRequestRunRequest
+fields:
+  workspaceId: int
+  sourceCollectionId: int?
+  sourceEndpointId: int?
+  environmentId: int?
+  method: String?
+  url: String?
+  headersJson: String?
+  queryParamsJson: String?
+  bodyJson: String?
+  authJson: String?
+  timeoutMs: int?

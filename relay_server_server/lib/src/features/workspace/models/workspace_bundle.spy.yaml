@@ -1,8 +1,0 @@
-# Full workspace: collections (with requests) + environments. Aligned with Röle WorkspaceBundle.
-class: WorkspaceBundle
-fields:
-  version: int
-  exportedAt: DateTime
-  collections: List<CollectionBundle>
-  environments: List<EnvironmentModel>
-  source: String?

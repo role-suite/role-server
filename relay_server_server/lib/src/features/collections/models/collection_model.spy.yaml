@@ -1,8 +1,9 @@
-# Collection metadata. Aligned with Röle CollectionModel.
 class: CollectionModel
 fields:
-  id: String
+  id: int
+  workspaceId: int
   name: String
-  description: String
+  description: String?
+  createdByUserId: int
   createdAt: DateTime
   updatedAt: DateTime

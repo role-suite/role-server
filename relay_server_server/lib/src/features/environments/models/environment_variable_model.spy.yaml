@@ -1,0 +1,12 @@
+class: EnvironmentVariableModel
+fields:
+  id: int
+  environmentId: int
+  key: String
+  value: String
+  enabled: bool
+  isSecret: bool
+  position: int
+  createdByUserId: int
+  createdAt: DateTime
+  updatedAt: DateTime

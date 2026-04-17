@@ -1,0 +1,4 @@
+class: CreateWorkspaceRequest
+fields:
+  name: String
+  type: String?
